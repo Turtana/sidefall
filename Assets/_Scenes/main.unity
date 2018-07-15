@@ -2050,6 +2050,9 @@ MonoBehaviour:
   jumpForce: 20
   gravityStrength: 1
   aimBall: {fileID: 1406489802103424, guid: 7aea9ec1a13e9e345adbe8ef17079503, type: 2}
+  crosshair: {fileID: 21300000, guid: d5279b96edbae094393e6f2186261da4, type: 3}
+  crosshair_gray: {fileID: 21300000, guid: 0fd2faaeb2e895d4781601aaea5f528e, type: 3}
+  crosshair_ui: {fileID: 335547637}
 --- !u!4 &1794391942 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4310391783692418, guid: 3c031dd21726562498bd32262b8b3820,

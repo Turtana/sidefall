@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -10,9 +11,12 @@ public class PlayerScript : MonoBehaviour {
 	public float jumpForce;
 	public float gravityStrength;
 	public GameObject aimBall;
+	public Sprite crosshair;
+	public Sprite crosshair_gray;
+	public Image crosshair_ui;
 
 	private Rigidbody rb;
-	private bool hasJumped;
+	private bool hasJumped; // This really means "mid-air"...
 	private float sprintDoubling;
 	private float personalGravity;
 	private Vector3 localvel;
@@ -25,6 +29,7 @@ public class PlayerScript : MonoBehaviour {
 		hasJumped = false;
 		sprintDoubling = 1;
 		personalGravity = -1.0f;
+		crosshair_ui.sprite = crosshair;
 	}
 
 	void FixedUpdate () {
@@ -59,7 +64,9 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void Update() { // Gravity changing stuff
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButtonDown(0) && !hasJumped) {
+			hasJumped = true;
+			crosshair_ui.sprite = crosshair_gray;
 			Vector3 centrum = new Vector3 (Screen.width / 2, Screen.height / 2, 0);
 			Ray ray = Camera.main.ScreenPointToRay(centrum);
 			RaycastHit hit;
@@ -102,12 +109,14 @@ public class PlayerScript : MonoBehaviour {
 		if (!hasJumped) {
 			rb.velocity += transform.up * jumpForce;
 			hasJumped = true;
+			crosshair_ui.sprite = crosshair_gray;
 		}
 	}
 
 	void OnCollisionEnter (Collision other) {
 		if (other.gameObject.tag == "Ground") {
 			hasJumped = false;
+			crosshair_ui.sprite = crosshair;
 		}
 	}
 }
