@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour {
 	public Sprite crosshair;
 	public Sprite crosshair_gray;
 	public Image crosshair_ui;
+	public GameObject feet;
 
 	private Rigidbody rb;
 	private bool hasJumped; // This really means "mid-air"...
@@ -113,10 +114,8 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter (Collision other) {
-		if (other.gameObject.tag == "Ground") {
-			hasJumped = false;
-			crosshair_ui.sprite = crosshair;
-		}
+	public void feetOnTheGround () {
+		hasJumped = false;
+		crosshair_ui.sprite = crosshair;
 	}
 }
