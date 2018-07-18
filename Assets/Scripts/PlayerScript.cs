@@ -80,12 +80,15 @@ public class PlayerScript : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(centrum);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit)) { // checks if the player has clicked an collision box
-				hasJumped = true;
-				crosshair_ui.sprite = crosshair_gray;
 				if (current_grav_tag) {
 					Destroy(current_grav_tag);
 				}
 				current_grav_tag = Instantiate(aimBall, hit.point + hit.normal / 100, Quaternion.LookRotation(hit.normal));
+				if (hit.normal == transform.up) {
+					return;
+				}
+				hasJumped = true;
+				crosshair_ui.sprite = crosshair_gray;
 				rotateGravity(hit.normal); // This side UP
 			}
 		}
@@ -108,22 +111,23 @@ public class PlayerScript : MonoBehaviour {
 
 	private void rotateGravity(Vector3 direction) {
 		rotating = true;
+		rotOriginal = transform.rotation;
 		if (direction.z < -0.1) {
-			rotDestination = Quaternion.Euler(-90, 0, 0); // Direction handling
+			rotDestination = Quaternion.Euler(-90, 0, rotOriginal.eulerAngles.z); // Direction handling
 		} else if (direction.z > 0.1) {
-			rotDestination = Quaternion.Euler(90, 0, 0);
+			rotDestination = Quaternion.Euler(90, 0, rotOriginal.eulerAngles.z);
 		}
 		if (direction.y > 0.1) {
-			rotDestination = Quaternion.Euler(0, 0, 0);
+			rotDestination = Quaternion.Euler(0, rotOriginal.eulerAngles.y, 0);
 		} else if (direction.y < -0.1) {
-			rotDestination = Quaternion.Euler(0, 0, 180);
+			rotDestination = Quaternion.Euler(0, rotOriginal.eulerAngles.y, 180);
 		}
 		if (direction.x < -0.1) {
-			rotDestination = Quaternion.Euler(0, 0, 90);
+			rotDestination = Quaternion.Euler(rotOriginal.eulerAngles.x, 0, 90);
 		} else if (direction.x > 0.1) {
-			rotDestination = Quaternion.Euler(0, 0, -90);
+			rotDestination = Quaternion.Euler(rotOriginal.eulerAngles.x, 0, -90);
 		}
-		rotOriginal = transform.rotation;
+
 		rb.velocity = Vector3.zero;
 	}
 
