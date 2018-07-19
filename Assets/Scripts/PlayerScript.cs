@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject feet;
 
 	private Rigidbody rb;
+	private Vector3 movement;
 	private bool hasJumped; // This really means "mid-air"...
 	private float sprintDoubling;
 	private float personalGravity;
@@ -49,8 +50,9 @@ public class PlayerScript : MonoBehaviour {
 			float mouse_y = Input.GetAxis("Mouse Y");
 
 			localvel = transform.InverseTransformDirection(rb.velocity);
-			Vector3 movement = new Vector3 (movement_x * movementSpeed, localvel.y, movement_z * movementSpeed);
-			rb.velocity = transform.rotation * movement;
+			movement = new Vector3 (movement_x, 0, movement_z);
+			Vector3 fallSpeed = new Vector3 (0, localvel.y, 0);
+			rb.velocity = transform.rotation * (Vector3.ClampMagnitude(movement, 1) * movementSpeed * sprintDoubling + fallSpeed);
 			rb.velocity += transform.up * personalGravity * gravityStrength;
 
 			localCameraRot = PlayerCamera.transform.localRotation.eulerAngles;
