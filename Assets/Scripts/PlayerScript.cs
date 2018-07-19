@@ -115,19 +115,19 @@ public class PlayerScript : MonoBehaviour {
 		rotating = true;
 		rotOriginal = transform.rotation;
 		if (direction.z < -0.1) {
-			rotDestination = Quaternion.Euler(-90, 0, rotOriginal.eulerAngles.z); // Direction handling
+			rotDestination = Quaternion.Euler(-90, 0, 0); // Direction handling
 		} else if (direction.z > 0.1) {
-			rotDestination = Quaternion.Euler(90, 0, rotOriginal.eulerAngles.z);
+			rotDestination = Quaternion.Euler(90, 0, 0);
 		}
 		if (direction.y > 0.1) {
-			rotDestination = Quaternion.Euler(0, rotOriginal.eulerAngles.y, 0);
+			rotDestination = Quaternion.Euler(0, 0, 0);
 		} else if (direction.y < -0.1) {
-			rotDestination = Quaternion.Euler(0, rotOriginal.eulerAngles.y, 180);
+			rotDestination = Quaternion.Euler(0, 0, 180);
 		}
 		if (direction.x < -0.1) {
-			rotDestination = Quaternion.Euler(rotOriginal.eulerAngles.x, 0, 90);
+			rotDestination = Quaternion.Euler(0, 0, 90);
 		} else if (direction.x > 0.1) {
-			rotDestination = Quaternion.Euler(rotOriginal.eulerAngles.x, 0, -90);
+			rotDestination = Quaternion.Euler(0, 0, -90);
 		}
 
 		rb.velocity = Vector3.zero;
